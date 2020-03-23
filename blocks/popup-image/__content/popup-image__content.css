@@ -1,0 +1,9 @@
+
+.popup-image__content {
+    width:80vw;
+    height: 80vh;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    border-radius: 5px;;
+}

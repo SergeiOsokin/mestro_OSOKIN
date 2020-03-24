@@ -6,9 +6,10 @@ import Popup from './js/Popup.js';
 import UserInfo from './js/UserInfo.js';
 import FormValidator from './js/FormValidator.js';
 import Api from './js/Api.js';
-
+const serverUrl = NODE_ENV === 'development' ? 'http://praktikum.tk/cohort8' : 'https://praktikum.tk/cohort8';
 const api = new Api({
-    baseUrl: 'https://praktikum.tk/cohort8',
+    baseUrl: serverUrl,
+    //baseUrl: 'https://praktikum.tk/cohort8',
     headers: {
         authorization: '44df0b31-b1b2-4c2f-8004-9e32bc2204a3',
         'Content-Type': 'application/json'
@@ -23,11 +24,6 @@ const buttonEditProfile = mainContainer.querySelector('.user-info__button-edit')
 const editProfilePopup = mainContainer.querySelector('.popup-edit');//общий блок для редактирования профиля
 const newProfileCardForm = document.forms.newEdit;//форма редактирования профиля
 const imageBlock = mainContainer.querySelector('.popup-image');
-const wordsError = {
-    tooShort: 'Должно быть от 2 до 30 символов',
-    valueMissing: 'Это обязательное поле',
-    patternMismatch: 'Тут должна быть ссылка на картинку',
-}
 const tmp = 'de23ac6cd6c1cde773f69969';
 
 const cardClass = new Card(cardsBlock, api);//создадим экземляр класса и установим слушатели

@@ -9,6 +9,11 @@ export default class FormValidator {
     }
 
     checkInputValidity(event) {//проверка валидации
+        const wordsError = {
+            tooShort: 'Должно быть от 2 до 30 символов',
+            valueMissing: 'Это обязательное поле',
+            patternMismatch: 'Тут должна быть ссылка на картинку',
+        }
         for (let key in wordsError) {//
             if (event.target.validity[key]) {
                 return event.target.closest('div').querySelector(`.error`).textContent = wordsError[key];

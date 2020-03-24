@@ -1,4 +1,12 @@
-//Замечания по основной части исправлены.
+import "./style.css";
+ import img from './images/logo.svg';
+import Card from './js/Card.js';
+import CardList from './js/CardList.js';
+import Popup from './js/Popup.js';
+import UserInfo from './js/UserInfo.js';
+import FormValidator from './js/FormValidator.js';
+import Api from './js/Api.js';
+
 const api = new Api({
     baseUrl: 'https://praktikum.tk/cohort8',
     headers: {

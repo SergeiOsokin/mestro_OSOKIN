@@ -1,4 +1,4 @@
-class CardList {
+export default class CardList {
     constructor(container, arrCards = '') {//принимаем контейнер куда добавим карточки и массив с карточками
         this.container = container;//контейнер, где храним все добавленные карточки
         this.arrCards = arrCards;//передаем принятый массив в метод, который создаст карточки

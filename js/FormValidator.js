@@ -1,4 +1,4 @@
-class FormValidator {
+export default class FormValidator {
     constructor(popup) {//функция для установки обработчиков на форму.принимаем открывшийся элемент
         this.form = popup;//ловим форму, которая есть в открышейся форме
         this.button = this.form.querySelector('.button');//ловим кнопку, которая есть в открышейся форме

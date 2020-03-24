@@ -1,4 +1,4 @@
-class Api {
+export default class Api {
     constructor(option) {
         this.option = option;
     }
@@ -20,7 +20,6 @@ class Api {
             })
             .catch((err) => {
                 alert(err);
-                console.log('1')
             })
     }
 
@@ -37,11 +36,9 @@ class Api {
             })
             .then((data) => {
                 profileDataForm.setUserInfo(data.name, data.about, data.avatar);
-                console.log(data)
             })
             .catch((err) => {
                 alert(err);
-                console.log('2')
             })
     }
     sendUserData(newName, newJob) {//отправка новых имя и работа на сервер
@@ -64,7 +61,6 @@ class Api {
             })
             .catch((err) => {
                 alert(err);
-                console.log('3')
             })
     }
     sendCard(nameCard, linkCard, cardList, cardClass) {//отправка карточки
@@ -84,7 +80,6 @@ class Api {
         })
         .then((data) => {
             cardList.addCard(nameCard, linkCard, cardClass);
-            console.log(data);
         })
         .catch((err) => {
             alert(err);
@@ -102,7 +97,7 @@ class Api {
             return Promise.reject(`Ошибка отправки данных на сервер: ` + res.status);
         })
         .then((data) => {
-            console.log(data);
+            // console.log(data);
         })
         .catch((err) => {
             alert(err);
@@ -120,7 +115,7 @@ class Api {
             return Promise.reject(`Ошибка отправки данных на сервер: ` + res.status);
         })
         .then((data) => {
-            console.log(data);
+            // console.log(data);
         })
         .catch((err) => {
             alert(err);
@@ -138,7 +133,7 @@ class Api {
             return Promise.reject(`Ошибка отправки данных на сервер: ` + res.status);
         })
         .then((data) => {
-            console.log(data);
+            // console.log(data);
         })
         .catch((err) => {
             alert(err);

@@ -19,14 +19,6 @@ module.exports = {
             use: { loader: "babel-loader" }, // весь JS обрабатывается пакетом babel-loader
             exclude: /node_modules/ // исключает папку node_modules
         },
-        // {//file loader
-        //     test: /\.(png|jpe?g|gif|svg)$/i,
-        //     use: [
-        //       {
-        //         loader: 'file-loader',
-        //       },
-        //     ],
-        //   },
         {// пример настройки плагина image-webpack-loader
             test: /\.(png|jpg|gif|ico|svg)$/,
             use: [
@@ -37,10 +29,6 @@ module.exports = {
                 },
             ]
         },
-        // {
-        //     test: /\.css$/, // применять это правило только к CSS-файлам
-        //     use: [MiniCssExtractPlugin.loader, 'css-loader'] // к этим файлам нужно применить пакеты, которые мы уже установили
-        // },
         {
             test: /\.css$/i,
             use: [
@@ -49,10 +37,6 @@ module.exports = {
                 'postcss-loader'
             ]
         },
-        // {//установили штуку выше
-        //     test: /\.css$/,
-        //     use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader']
-        // },
         {//шрифты
             test: /\.(eot|ttf|woff|woff2)$/,
             loader: 'file-loader?name=./vendor/[name].[ext]'

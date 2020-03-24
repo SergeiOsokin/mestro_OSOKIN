@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Mesto</title>
+  <link rel="stylesheet" href="style.2fef0b3fcb910be8feb8.css">
+</head>
+<body>
+  <div class="root">
+    <header class="header root__section">
+      <img src="./images/logo.svg" alt="mesto logo" class="logo">
+    </header>
+    <div class="profile root__section">
+      <div class="user-info">
+        <div class="user-info__photo"></div>
+        <div class="user-info__data">
+          <h1 class="user-info__name"></h1>
+          <p class="user-info__job"></p>
+          <button class="user-info__button-edit button">Edit</button>
+        </div>
+        <button class="button user-info__button">+</button>
+      </div>
+    </div>
+    <div class="places-list root__section">
+
+    </div>
+    <div class="popup">
+      <div class="popup__content">
+        <img src="./images/close.svg" alt="" class="popup__close">
+        <h3 class="popup__title">Новое место</h3>
+        <form class="popup__form" name="new">
+		  <div>
+          	<input type="text" autocomplete="off" name="name" class="popup__input popup__input_type_name" placeholder="Название" required maxlength="30" minlength="2">
+          	<div class="error"></div>
+          </div>
+          <div>
+            <input type="url" pattern='^(http|https):\/\/\w*.\w*.\w*.+' autocomplete="off" name="link" class="popup__input popup__input_type_link-url" placeholder="Ссылка на картинку" required>
+            <div class="error"></div>
+          </div>
+          <button type class="button popup__button">+</button>
+        </form>
+      </div>
+    </div>    
+    <div class="popup-edit">
+      <div class="popup-edit__content">
+        <img src="./images/close.svg" alt="" class="popup-edit__close">
+        <h3 class="popup-edit__title">Редактировать профиль</h3>
+        <form class="popup-edit__form" name="newEdit">
+          <div>
+            <input type="text" autocomplete="off" name="nameEdit" class="popup-edit__input popup-edit__input_type_name" placeholder="Имя" required maxlength="30" minlength="2">
+            <div class="error"></div>
+          </div>
+          <div>
+            <input type="text" autocomplete="off" name="aboutSelfEdit" class="popup-edit__input popup-edit__input_type_about-self" placeholder="О себе" required maxlength="30" minlength="2">
+            <div class="error"></div>
+          </div>
+          <button type class="button popup-edit__button">Сохранить</button>
+        </form> 
+      </div>
+    </div>
+    <div class="popup-image">
+      <div class="popup-image__content">
+        <img src="./images/close.svg" alt="" class="popup-image__close">
+      </div>
+    </div>
+  </div>
+  <script type="module" src="main.5958d07b09db865f9bf6.js"></script>
+</body>
+</html>

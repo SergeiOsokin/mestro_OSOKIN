@@ -1,4 +1,4 @@
-Версия проекта 1.0.3
+Версия проекта 1.0.4
 
 Ссылка на проект на Github Pages:
 https://sergeiosokin.github.io/mestro_OSOKIN/

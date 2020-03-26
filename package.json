@@ -1,7 +1,7 @@
 {
   "name": "mestro",
   "homepage": "https://sergeiosokin.github.io/mestro_OSOKIN/",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "В приложении можно добавлять фотографии, удалять их и ставить им лайки",
   "main": "index.js",
   "scripts": {

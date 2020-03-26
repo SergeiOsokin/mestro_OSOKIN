@@ -3,17 +3,17 @@ export default class FormValidator {
         this.form = popup;//ловим форму, которая есть в открышейся форме
         this.button = this.form.querySelector('.button');//ловим кнопку, которая есть в открышейся форме
     }
-    setValidate() {
+    setValidate(wordError) {
         this.form.addEventListener('input', this.setSubmitButtonState.bind(this, this.form, this.button));
-        this.form.addEventListener('input', this.checkInputValidity);
+        this.form.addEventListener('input', this.checkInputValidity(event, wordError));
     }
 
-    checkInputValidity(event) {//проверка валидации
-        const wordsError = {
-            tooShort: 'Должно быть от 2 до 30 символов',
-            valueMissing: 'Это обязательное поле',
-            patternMismatch: 'Тут должна быть ссылка на картинку',
-        }
+    checkInputValidity(event, wordsError) {//проверка валидации
+        // const wordsError = {
+        //     tooShort: 'Должно быть от 2 до 30 символов',
+        //     valueMissing: 'Это обязательное поле',
+        //     patternMismatch: 'Тут должна быть ссылка на картинку',
+        // }
         for (let key in wordsError) {//
             if (event.target.validity[key]) {
                 return event.target.closest('div').querySelector(`.error`).textContent = wordsError[key];

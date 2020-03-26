@@ -25,7 +25,11 @@ const editProfilePopup = mainContainer.querySelector('.popup-edit');//общий
 const newProfileCardForm = document.forms.newEdit;//форма редактирования профиля
 const imageBlock = mainContainer.querySelector('.popup-image');
 const tmp = 'de23ac6cd6c1cde773f69969';
-
+        const wordsError = {
+            tooShort: 'Должно быть от 2 до 30 символов',
+            valueMissing: 'Это обязательное поле',
+            patternMismatch: 'Тут должна быть ссылка на картинку',
+        }
 const cardClass = new Card(cardsBlock, api);//создадим экземляр класса и установим слушатели
 const cardList = new CardList(cardsBlock);//создадим экземляр класса 
 const popupContainers = new Popup(mainContainer);//создаем экземляр класса, чтобы обращаться к нему
@@ -45,7 +49,7 @@ function openEdit() {//функция для открытия редактиро
 
 function openNewCard() {//функция для открытия блока новой карточки
     popupContainers.open(event);//откроем блок с формой
-    formValidationCard.setValidate();//повесим слушатели для валидации
+    formValidationCard.setValidate(wordsError);//повесим слушатели для валидации
 }
 
 buttonNewCard.addEventListener('click', openNewCard)// блока добаления карточки

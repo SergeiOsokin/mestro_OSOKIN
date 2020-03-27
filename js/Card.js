@@ -1,4 +1,4 @@
-class Card {
+export default class Card {
     constructor(container, api) {
         this.containerCards = container;//поймаем контейнер с карточками и используя делегирование повесим обпаботчики лайка/удаления
 		this.containerCards.addEventListener('click', this.like);//слушатель для лайка
@@ -40,19 +40,19 @@ class Card {
     }
     like(event, cardId) {//метод лайка карточки
 		if (event.target.classList.contains('place-card__like-icon')){
-            api.putLike('5e4959db69fae7001f72643a');
+            //api.putLike('5e4959db69fae7001f72643a');
         	event.target.classList.toggle('place-card__like-icon_liked');//лайкаем или убираем лайк переключением класса			
             return;
         }
         if (event.target.classList.contains('place-card__like-icon') && event.target.classList.contains('place-card__like-icon_liked')){
-            api.deleteLike('5e4959db69fae7001f72643a');
+            // api.deleteLike('5e4959db69fae7001f72643a');
         	event.target.classList.toggle('place-card__like-icon_liked');//лайкаем или убираем лайк переключением класса			
             return;
         }
     }
     remove(event) {//метод удаления карточки
 		if (event.target.classList.contains('place-card__delete-icon')){
-            api.deleteCard(cardId);
+            // api.deleteCard(cardId);
         	document.querySelector('.places-list').removeChild(event.target.closest('.place-card'));//а тут поднимаемся до родителя элемента у которого класс .place-card, чтобы удалить именно эту карточку
         }
 	}

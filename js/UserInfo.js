@@ -1,4 +1,4 @@
-class UserInfo {
+export default class UserInfo {
     constructor(element) {
         this.element = element;//ловим блок
         this.form = element.querySelector('.popup-edit__form');//ловим форму

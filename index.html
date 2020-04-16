@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Mesto</title>
-  <link rel="stylesheet" href="style.2fef0b3fcb910be8feb8.css">
+  <link rel="stylesheet" href="style.aef1a956ea03438152fa.css">
 </head>
 <body>
   <div class="root">
@@ -63,6 +63,19 @@
     <div class="popup-image">
       <div class="popup-image__content">
         <img src="./images/close.svg" alt="" class="popup-image__close">
+      </div>
+    </div>
+    <div class="popup-avatar">
+      <div class="popup-avatar__content">
+        <img src="./images/close.svg" alt="" class="popup-avatar__close">
+        <h3 class="popup-avatar__title">Изменить аватар</h3>
+        <form class="popup-avatar__form" name="newavatar">
+          <div>
+            <input type="text" autocomplete="off" name="nameavatar" class="popup-avatar__input popup-avatar__input_type_name" placeholder="Ссылка на аватар" required>
+            <div class="error"></div>
+          </div>
+          <button type class="button popup-avatar__button">Сохранить</button>
+        </form> 
       </div>
     </div>
   </div>

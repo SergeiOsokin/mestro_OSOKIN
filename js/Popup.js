@@ -17,6 +17,10 @@ export default class Popup {
             this.element.querySelector('.popup-image__content').setAttribute('style', `${event.target.getAttribute('style')}`);
             return;
         }
+        if (event.target.classList.contains('user-info__photo')) {
+            this.element.querySelector('.popup-avatar').classList.add('popup_is-opened');
+            return;
+        }
     }
     close(event) {//закрытие блоков
         if (event.target.classList.contains('popup__close')) {//закрытие формы добавления карточки
@@ -29,6 +33,11 @@ export default class Popup {
             return;
         } if (event.target.classList.contains('popup-image__close')) {//закроем блок с картинкой на весь экран
             this.element.querySelector('.popup-image').classList.remove('popup_is-opened');
+            return;
+        }
+        if (event.target.classList.contains('popup-avatar__close')) {//закроем блок с картинкой на весь экран
+            this.element.querySelector('.popup-avatar').classList.remove('popup_is-opened');
+            this.element.querySelector('.popup-avatar__form').reset();//сбросим форму, на случай, если введут данные, но просто закроют форму
             return;
         } if (event.type === 'submit') {//закрываем форму добавления карточки при submit
             this.element.querySelector('.popup').classList.remove('popup_is-opened');

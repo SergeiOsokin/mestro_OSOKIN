@@ -65,6 +65,19 @@
         <img src="<%=require('./images/close.svg').default%>" alt="" class="popup-image__close">
       </div>
     </div>
+    <div class="popup-avatar">
+      <div class="popup-avatar__content">
+        <img src="<%=require('./images/close.svg').default%>" alt="" class="popup-avatar__close">
+        <h3 class="popup-avatar__title">Изменить аватар</h3>
+        <form class="popup-avatar__form" name="newavatar">
+          <div>
+            <input type="text" autocomplete="off" name="nameavatar" class="popup-avatar__input popup-avatar__input_type_name" placeholder="Ссылка на аватар" required>
+            <div class="error"></div>
+          </div>
+          <button type class="button popup-avatar__button">Сохранить</button>
+        </form> 
+      </div>
+    </div>
   </div>
   <script type="module" src="<%= htmlWebpackPlugin.files.chunks.main.entry %>"></script>
 </body>

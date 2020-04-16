@@ -85,6 +85,24 @@ export default class Api {
             alert(err);
         })
     }
+    sendAvatar(URL) {//отправка avatar
+        fetch(`${this.option.baseUrl}/users/me/avatar`, {
+            method: 'PATCH',
+            headers: this.option.headers,
+            body: JSON.stringify({
+                avatar: URL,
+            })
+        })
+        .then((res) => {
+            if (res.ok) {
+                return res.json();
+            }
+            return Promise.reject(`Ошибка отправки данных на сервер: ` + res.status);
+        })
+        .catch((err) => {
+            alert(err);
+        })
+    }
     deleteCard(cardId) {//удаление карточки
         fetch(`${this.option.baseUrl}/cards/${cardId}`, {
             method: 'DELETE',

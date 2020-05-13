@@ -91,4 +91,6 @@ api.getStarterCards(cardList, cardClass, "42cd123a5b2a7d443e2e2c37");//созд�
 
 export { wordsError };
 
+// api.deleteCard('5e8b359c69fae7001f72ad8c')
+
 //42cd123a5b2a7d443e2e2c37 мой id

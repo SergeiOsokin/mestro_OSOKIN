@@ -52,7 +52,7 @@ export default class Card {
     }
     remove(event) {//метод удаления карточки
 		if (event.target.classList.contains('place-card__delete-icon')){
-            // api.deleteCard(cardId);
+            //api.deleteCard('5e4c256c69fae7001f726554');
         	document.querySelector('.places-list').removeChild(event.target.closest('.place-card'));//а тут поднимаемся до родителя элемента у которого класс .place-card, чтобы удалить именно эту карточку
         }
 	}

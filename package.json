@@ -1,6 +1,6 @@
 {
   "name": "mestro",
-  "homepage": "https://sergeiosokin.github.io/mestro_OSOKIN/",
+  "homepage": "https://sergeiosokin.github.io/Project-mestro-with-API-yandex/",
   "version": "1.0.5",
   "description": "В приложении можно добавлять фотографии, удалять их и ставить им лайки",
   "main": "index.js",
@@ -11,12 +11,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SergeiOsokin/mestro_OSOKIN.git"
+    "url": "git+https://github.com/SergeiOsokin/Project-mestro-with-API-yandex.git"
   },
   "author": "Osokin",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/SergeiOsokin/mestro_OSOKIN/issues"
+    "url": "https://github.com/SergeiOsokin/Project-mestro-with-API-yandex/issues"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",

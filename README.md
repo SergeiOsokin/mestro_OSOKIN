@@ -1,10 +1,10 @@
 Версия проекта 1.0.5
 
 Ссылка на проект на Github Pages:
-https://sergeiosokin.github.io/mestro_OSOKIN/
+https://sergeiosokin.github.io/Project-mestro-with-API-yandex/
 
 Для развертывания проекта локально необходимо:
-- скопировать репозиторий командой git clone https://github.com/SergeiOsokin/mestro_OSOKIN.git -b develop;
+- скопировать репозиторий командой git clone https://github.com/SergeiOsokin/Project-mestro-with-API-yandex.git;
 - далее выполнить команду npm install, 
 - после установки необходимых плагинов выполнить команду npm run dev. 
 

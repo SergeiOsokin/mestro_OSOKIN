@@ -9,7 +9,7 @@
 }
 
 @media screen and (max-width: 540px) {
-  .popup__content {
+  .popup-avatar__content {
     width: calc(100% - 60px);
   }
 }

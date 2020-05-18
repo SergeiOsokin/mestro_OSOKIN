@@ -2,7 +2,7 @@ import "./style.css";
 
 import Card from './js/Card.js';
 import CardList from './js/CardList.js';
-import Popup from './js/Popup.js';
+import {Popup, } from './js/Popup.js';
 import UserInfo from './js/UserInfo.js';
 import FormValidator from './js/FormValidator.js';
 import Api from './js/Api.js';

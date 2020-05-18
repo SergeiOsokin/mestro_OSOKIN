@@ -56,29 +56,3 @@ export default class Popup {
         }
     }
 }
-// class Popup {
-// 	constructor(element) {
-// 		this.element = element.querySelector('.popup');//ловим блок
-//     }
-//     open(event) {//открытие блоков добавления.
-//         if (event.target.classList.contains('user-info__button')) {
-//             return this.element.classList.add('popup_is-opened');
-//         }
-//     }
-//     close(event) {//закрытие блоков
-//         if (event.target.classList.contains('popup__close')) {//закрытие формы добавления карточки
-//             this.element.classList.remove('popup_is-opened');
-//             this.element.querySelector('form').reset();//сбросим форму, на случай, если введут данные, но просто закроют форму
-//             this.element.querySelector(`.error`).textContent = '';
-//             console.log(this.element);
-//             return;
-//         } if (event.type === 'submit') {//закрываем форму добавления карточки при submit
-//             this.element.classList.remove('popup_is-opened');
-//             this.element.querySelector('.popup__button').classList.remove('button-active');
-//             this.element.querySelector('form').reset();//
-// 			return;
-//         }
-//     }
-// }
-
-// export { Popup };

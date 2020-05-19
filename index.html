@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
   <title>Mesto</title>
   <link rel="stylesheet" href="<%=htmlWebpackPlugin.files.chunks.main.css %>">
 </head>
+
 <body>
   <div class="root">
     <header class="header root__section">
@@ -31,33 +33,38 @@
         <img src="<%=require('./images/close.svg').default%>" alt="" class="popup__close">
         <h3 class="popup__title">Новое место</h3>
         <form class="popup__form" name="new">
-		  <div>
-          	<input type="text" autocomplete="off" name="name" class="popup__input popup__input_type_name" placeholder="Название" required maxlength="30" minlength="2">
-          	<div class="error"></div>
+          <div>
+            <input type="text" autocomplete="off" name="name" class="popup__input popup__input_type_name"
+              placeholder="Название" required maxlength="30" minlength="2">
+            <div class="error"></div>
           </div>
           <div>
-            <input type="url" pattern='^(http|https):\/\/\w*.\w*.\w*.+' autocomplete="off" name="link" class="popup__input popup__input_type_link-url" placeholder="Ссылка на картинку" required>
+            <input type="url" pattern='^(http|https):\/\/\w*.\w*.\w*.+' autocomplete="off" name="link"
+              class="popup__input popup__input_type_link-url" placeholder="Ссылка на картинку" required>
             <div class="error"></div>
           </div>
           <button type class="button popup__button">+</button>
         </form>
       </div>
-    </div>    
+    </div>
     <div class="popup-edit">
       <div class="popup-edit__content">
         <img src="<%=require('./images/close.svg').default%>" alt="" class="popup-edit__close">
         <h3 class="popup-edit__title">Редактировать профиль</h3>
         <form class="popup-edit__form" name="newEdit">
           <div>
-            <input type="text" autocomplete="off" name="nameEdit" class="popup-edit__input popup-edit__input_type_name" placeholder="Имя" required maxlength="30" minlength="2">
+            <input type="text" autocomplete="off" name="nameEdit" class="popup-edit__input popup-edit__input_type_name"
+              placeholder="Имя" required maxlength="30" minlength="2">
             <div class="error"></div>
           </div>
           <div>
-            <input type="text" autocomplete="off" name="aboutSelfEdit" class="popup-edit__input popup-edit__input_type_about-self" placeholder="О себе" required maxlength="30" minlength="2">
+            <input type="text" autocomplete="off" name="aboutSelfEdit"
+              class="popup-edit__input popup-edit__input_type_about-self" placeholder="О себе" required maxlength="30"
+              minlength="2">
             <div class="error"></div>
           </div>
           <button type class="button popup-edit__button">Сохранить</button>
-        </form> 
+        </form>
       </div>
     </div>
     <div class="popup-image">
@@ -71,14 +78,16 @@
         <h3 class="popup-avatar__title">Изменить аватар</h3>
         <form class="popup-avatar__form" name="newavatar">
           <div>
-            <input type="text" autocomplete="off" name="nameavatar" class="popup-avatar__input popup-avatar__input_type_name" placeholder="Ссылка на аватар" required>
+            <input type="text" autocomplete="off" name="nameavatar"
+              class="popup-avatar__input popup-avatar__input_type_name" placeholder="Ссылка на аватар" required>
             <div class="error"></div>
           </div>
           <button type class="button popup-avatar__button">Сохранить</button>
-        </form> 
+        </form>
       </div>
     </div>
   </div>
   <script type="module" src="<%= htmlWebpackPlugin.files.chunks.main.entry %>"></script>
 </body>
+
 </html>

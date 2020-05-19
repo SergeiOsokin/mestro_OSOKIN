@@ -38,10 +38,11 @@ export default class Card {
 
         return cardBlock;
     }
-    like(event, cardId) {//метод лайка карточки
+    like(event, cardId) {
 		if (event.target.classList.contains('place-card__like-icon')){
-            //api.putLike('5e4959db69fae7001f72643a');
+            this.api.putLike(123);
         	event.target.classList.toggle('place-card__like-icon_liked');//лайкаем или убираем лайк переключением класса			
+            
             return;
         }
         if (event.target.classList.contains('place-card__like-icon') && event.target.classList.contains('place-card__like-icon_liked')){
@@ -50,7 +51,7 @@ export default class Card {
             return;
         }
     }
-    remove(event) {//метод удаления карточки
+    remove(event) {
 		if (event.target.classList.contains('place-card__delete-icon')){
             //api.deleteCard('5e4c256c69fae7001f726554');
         	document.querySelector('.places-list').removeChild(event.target.closest('.place-card'));//а тут поднимаемся до родителя элемента у которого класс .place-card, чтобы удалить именно эту карточку

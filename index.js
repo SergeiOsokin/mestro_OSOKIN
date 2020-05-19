@@ -2,7 +2,10 @@ import "./style.css";
 
 import Card from './js/Card.js';
 import CardList from './js/CardList.js';
-import {Popup, } from './js/Popup.js';
+import Popup from './js/Popup.js';
+import PopupImage from './js/PopupImage.js';
+import PopupEdit from './js/PopupEdit.js';
+import PopupAvatar from './js/PopupAvatar.js';
 import UserInfo from './js/UserInfo.js';
 import FormValidator from './js/FormValidator.js';
 import Api from './js/Api.js';
@@ -10,7 +13,6 @@ import Avatar from './js/Avatar.js';
 const serverUrl = NODE_ENV === 'development' ? 'http://praktikum.tk/cohort8' : 'https://praktikum.tk/cohort8';
 const api = new Api({
     baseUrl: serverUrl,
-    //baseUrl: 'https://praktikum.tk/cohort8',
     headers: {
         authorization: '44df0b31-b1b2-4c2f-8004-9e32bc2204a3',
         'Content-Type': 'application/json'
@@ -36,13 +38,16 @@ const wordsError = {
     valueMissing: 'Это обязательное поле',
     patternMismatch: 'Тут должна быть ссылка на картинку',
 }
-const cardClass = new Card(cardsBlock, api);//создадим экземляр класса и установим слушатели
-const cardList = new CardList(cardsBlock);//создадим экземляр класса 
-const popupContainers = new Popup(mainContainer);//создаем экземляр класса, чтобы обращаться к нему
-const profileDataForm = new UserInfo(mainContainer);//создаем класс объекта, чтобы обращаться к нему
-const formValidationEdit = new FormValidator(newProfileCardForm);//для валидации
-const formValidationCard = new FormValidator(newCardForm);//для валидации
-const formValidationAvatar = new FormValidator(newProfileAvatar);//для валидации
+const cardClass = new Card(cardsBlock, api);
+const cardList = new CardList(cardsBlock);
+const popupContainers = new Popup(mainContainer);
+const popupImage = new PopupImage(mainContainer);
+const popupEdit = new PopupEdit(mainContainer);
+const popupAvatar = new PopupAvatar(mainContainer);
+const profileDataForm = new UserInfo(mainContainer);
+const formValidationEdit = new FormValidator(newProfileCardForm);
+const formValidationCard = new FormValidator(newCardForm);
+const formValidationAvatar = new FormValidator(newProfileAvatar);
 const formAvatar = new Avatar(mainContainer);
 
 function addCard() {//функция для добавления карточек руками
@@ -51,31 +56,32 @@ function addCard() {//функция для добавления карточе�
 }
 function openEdit() {//функция для открытия редактирования профиля
     profileDataForm.setUserInfo();//установим имя и профессию "по умолчанию" на открывшейся форме
-    popupContainers.open(event);//откроем блок с формой
+    popupEdit.open(event);//открытие блока с формой для профиля
     formValidationEdit.setValidate(wordsError);//повесим слушатели для валидации
 }
 
 function openNewCard() {//функция для открытия блока новой карточки
-    popupContainers.open(event);//откроем блок с формой
+    popupContainers.open(event);//открытие блока с формой для карточки
     formValidationCard.setValidate(wordsError);//повесим слушатели для валидации
 }
 
 function openAvatarEdit() {
-    popupContainers.open(event);//откроем блок с формой
+    popupAvatar.open(event);//открытие блока с формой для аватара
     formValidationAvatar.setValidate();//повесим слушатели для валидации
 }
 
 buttonNewCard.addEventListener('click', openNewCard)// блока добаления карточки
 buttonEditProfile.addEventListener('click', openEdit);// блока редактирования профиля
-cardsBlock.addEventListener('click', popupContainers.open.bind(popupContainers));// блока c картинкой
+cardsBlock.addEventListener('click', popupImage.open.bind(popupImage));// блока c картинкой
 avatarButton.addEventListener('click', openAvatarEdit);
 
 newCardBlockPopup.addEventListener('click', popupContainers.close.bind(popupContainers))// для закрытия блока добавления карточки
-editProfilePopup.addEventListener('click', popupContainers.close.bind(popupContainers))// для закрытия блока редактирования профиля
-imageBlock.addEventListener('click', popupContainers.close.bind(popupContainers));// для закрытия блока c картинкой
-avatarPopup.addEventListener('click', popupContainers.close.bind(popupContainers));// для закрытия блока c картинкой
+editProfilePopup.addEventListener('click', popupEdit.close.bind(popupEdit))// для закрытия блока редактирования профиля
+imageBlock.addEventListener('click', popupImage.close.bind(popupImage));// для закрытия блока c картинкой
+avatarPopup.addEventListener('click', popupAvatar.close.bind(popupAvatar));// для закрытия блока с аватаром
 
-newProfileCardForm.addEventListener('submit', profileDataForm.updateUserInfo.bind(profileDataForm, api, profileDataForm));//обновим профиль
+newProfileCardForm.addEventListener('submit', 
+    profileDataForm.updateUserInfo.bind(profileDataForm, api, profileDataForm));//обновим профиль
 newCardForm.addEventListener('submit', () => {
     event.preventDefault();
     addCard()

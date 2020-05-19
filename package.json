@@ -7,7 +7,8 @@
   "scripts": {
     "build": "cross-env NODE_ENV=production rimraf dist && webpack --mode production",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --mode development --open --watch",
-    "deploy": "cross-env NODE_ENV=production gh-pages -d dist"
+    "deploy": "cross-env NODE_ENV=production gh-pages -d dist",
+    "deployserv": "npm run build && scp -r ./dist/* sergeiosokin@84.201.171.208:/home/sergeiosokin/mestro-front"
   },
   "repository": {
     "type": "git",

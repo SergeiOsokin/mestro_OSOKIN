@@ -40,7 +40,7 @@ export default class Card {
     }
     like(event, cardId) {
 		if (event.target.classList.contains('place-card__like-icon')){
-            this.api.putLike(123);
+            //this.api.putLike(123);
         	event.target.classList.toggle('place-card__like-icon_liked');//лайкаем или убираем лайк переключением класса			
             
             return;

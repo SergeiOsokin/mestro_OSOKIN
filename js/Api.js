@@ -3,46 +3,33 @@ export default class Api {
         this.option = option;
     }
 
-    getStarterCards(cardList, cardClass, tmp) {//карточки при загрузке
-        fetch(`${this.option.baseUrl}/cards`, {
-            method: 'GET',
-            headers: this.option.headers,
-        })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Ошибка получения данных с сервера: ` + res.status);
-            })
-            .then((res) => {
-                cardList.render(res, cardClass, tmp);
-                
-            })
-            .catch((err) => {
-                alert(err);
-            })
+    _getResponseData(res) {
+        if (res.ok) {
+            return res.json();
+        }
+        return Promise.reject(`Ошибка получения данных с сервера: ` + res.status);
     }
-
+    getStarterCards() {//карточки при загрузке
+        return (
+            fetch(`${this.option.baseUrl}/cards`, {
+                method: 'GET',
+                headers: this.option.headers,
+            })
+                .then(res => this._getResponseData(res))
+                .catch((err) => alert(err))
+        )
+    }
     getUserData(profileDataForm) {//получаем данные с сервера при загрузке
-        fetch(`${this.option.baseUrl}/users/me`, {
+        return (fetch(`${this.option.baseUrl}/users/me`, {
             method: 'GET',
             headers: this.option.headers,
         })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Ошибка получения данных с сервера: ` + res.status);
-            })
-            .then((data) => {
-                profileDataForm.setUserInfo(data.name, data.about, data.avatar);
-            })
-            .catch((err) => {
-                alert(err);
-            })
+            .then(res => this._getResponseData(res))
+            .catch((err) => alert(err))
+        )
     }
     sendUserData(newName, newJob) {//отправка новых имя и работа на сервер
-        fetch(`${this.option.baseUrl}/users/me`, {
+        return (fetch(`${this.option.baseUrl}/users/me`, {
             method: 'PATCH',
             headers: this.option.headers,
             body: JSON.stringify({
@@ -50,18 +37,9 @@ export default class Api {
                 about: newJob,
             })
         })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Ошибка отправки данных на сервер: ` + res.status);
-            })
-            .then((res) => {
-                return res;
-            })
-            .catch((err) => {
-                alert(err);
-            })
+            .then((res) => this._getResponseData(res))
+            .catch((err) => alert(err))
+        )
     }
     sendCard(nameCard, linkCard, cardList, cardClass) {//отправка карточки
         fetch(`${this.option.baseUrl}/cards`, {
@@ -72,89 +50,74 @@ export default class Api {
                 link: linkCard,
             })
         })
-        .then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`Ошибка отправки данных на сервер: ` + res.status);
-        })
-        .then((data) => {
-            cardList.addCard(nameCard, linkCard, cardClass);
-        })
-        .catch((err) => {
-            alert(err);
-        })
+            .then((res) => {
+                if (res.ok) {
+                    return res.json();
+                }
+                return Promise.reject(`Ошибка отправки данных на сервер: ` + res.status);
+            })
+            .then((data) => {
+                cardList.addCard(nameCard, linkCard, cardClass);
+            })
+            .catch((err) => {
+                alert(err);
+            })
     }
     sendAvatar(URL) {//отправка avatar
-        fetch(`${this.option.baseUrl}/users/me/avatar`, {
+        return (fetch(`${this.option.baseUrl}/users/me/avatar`, {
             method: 'PATCH',
             headers: this.option.headers,
             body: JSON.stringify({
                 avatar: URL,
             })
         })
-        .then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`Ошибка отправки данных на сервер: ` + res.status);
-        })
-        .catch((err) => {
-            alert(err);
-        })
+            .then((res) => this._getResponseData(res))
+            .catch((err) => alert(err))
+        )
     }
     deleteCard(cardId) {//удаление карточки
-        fetch(`${this.option.baseUrl}/cards/${cardId}`, {
+        return (fetch(`${this.option.baseUrl}/cards/${cardId}`, {
             method: 'DELETE',
             headers: this.option.headers,
         })
-        .then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`Ошибка отправки данных на сервер: ` + res.status);
-        })
-        .then((data) => {
-            // console.log(data);
-        })
-        .catch((err) => {
-            alert(err);
-        })
+            .then((res) => this._getResponseData(res))
+            .catch((err) => alert(err))
+        )
     }
     putLike(cardId) {//ставим лайк карточке
         fetch(`${this.option.baseUrl}/cards/like/${cardId}`, {
             method: 'PUT',
             headers: this.option.headers,
         })
-        .then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`Ошибка отправки данных на сервер: ` + res.status);
-        })
-        .then((data) => {
-            // console.log(data);
-        })
-        .catch((err) => {
-            alert(err);
-        })
+            .then((res) => {
+                if (res.ok) {
+                    return res.json();
+                }
+                return Promise.reject(`Ошибка отправки данных на сервер: ` + res.status);
+            })
+            .then((data) => {
+                // console.log(data);
+            })
+            .catch((err) => {
+                alert(err);
+            })
     }
     deleteLike(cardId) {//снимаем лайк с карточки
         fetch(`${this.option.baseUrl}/cards/like/${cardId}`, {
             method: 'DELETE',
             headers: this.option.headers,
         })
-        .then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`Ошибка отправки данных на сервер: ` + res.status);
-        })
-        .then((data) => {
-            // console.log(data);
-        })
-        .catch((err) => {
-            alert(err);
-        })
+            .then((res) => {
+                if (res.ok) {
+                    return res.json();
+                }
+                return Promise.reject(`Ошибка отправки данных на сервер: ` + res.status);
+            })
+            .then((data) => {
+                // console.log(data);
+            })
+            .catch((err) => {
+                alert(err);
+            })
     }
 }

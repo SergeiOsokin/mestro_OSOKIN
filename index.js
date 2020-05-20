@@ -25,30 +25,31 @@ const newCardBlockPopup = mainContainer.querySelector('.popup');//общий б�
 const newCardForm = document.forms.new;//определение формы для добавления карточки
 const buttonEditProfile = mainContainer.querySelector('.user-info__button-edit');//кнопка для редактирования профиля
 const editProfilePopup = mainContainer.querySelector('.popup-edit');//общий блок для редактирования профиля
-const newProfileCardForm = document.forms.newEdit;//форма редактирования профиля
+const profileForm = document.forms.newEdit;//форма редактирования профиля
 const imageBlock = mainContainer.querySelector('.popup-image');
 
 const avatarPopup = mainContainer.querySelector('.popup-avatar');//общий блок для chenges avatar
 const avatarButton = mainContainer.querySelector('.user-info__photo');// блок foto профиля
 const newProfileAvatar = document.forms.newavatar;//форма редактирования avatar
 
-const tmp = 'de23ac6cd6c1cde773f69969';
 const wordsError = {
     tooShort: 'Должно быть от 2 до 30 символов',
     valueMissing: 'Это обязательное поле',
     patternMismatch: 'Тут должна быть ссылка на картинку',
 }
-const cardClass = new Card(cardsBlock, api);
+const cardClass = new Card(cardsBlock);
 const cardList = new CardList(cardsBlock);
 const popupContainers = new Popup(mainContainer);
 const popupImage = new PopupImage(mainContainer);
 const popupEdit = new PopupEdit(mainContainer);
 const popupAvatar = new PopupAvatar(mainContainer);
 const profileDataForm = new UserInfo(mainContainer);
-const formValidationEdit = new FormValidator(newProfileCardForm);
+const formValidationEdit = new FormValidator(profileForm);
 const formValidationCard = new FormValidator(newCardForm);
 const formValidationAvatar = new FormValidator(newProfileAvatar);
 const formAvatar = new Avatar(mainContainer);
+
+const myId = "42cd123a5b2a7d443e2e2c37";
 
 function addCard() {//функция для добавления карточек руками
     api.sendCard(newCardForm.elements.name.value, newCardForm.elements.link.value, cardList, cardClass);
@@ -80,23 +81,52 @@ editProfilePopup.addEventListener('click', popupEdit.close.bind(popupEdit))// д
 imageBlock.addEventListener('click', popupImage.close.bind(popupImage));// для закрытия блока c картинкой
 avatarPopup.addEventListener('click', popupAvatar.close.bind(popupAvatar));// для закрытия блока с аватаром
 
-newProfileCardForm.addEventListener('submit', 
-    profileDataForm.updateUserInfo.bind(profileDataForm, api, profileDataForm));//обновим профиль
+// отправим новые данные о пользователе и установим новые значения
+profileForm.addEventListener('submit', () => {
+    event.preventDefault();
+    api.sendUserData(profileForm.nameEdit.value, profileForm.aboutSelfEdit.value)
+        .then((newProfile) => {
+            profileDataForm.updateUserInfo(newProfile.name, newProfile.about, newProfile.avatar)
+        });
+});
+//слушатель на кнопку создания карточки
 newCardForm.addEventListener('submit', () => {
     event.preventDefault();
     addCard()
-});//слушатель на кнопку создания карточки
-
+});
+//изменение аватара
 newProfileAvatar.addEventListener('submit', () => {
     event.preventDefault();
-    formAvatar.updateAvatar(api);
+    api.sendAvatar(newProfileAvatar.nameavatar.value)
+        .then(newAvatar => {
+            formAvatar.updateAvatar(newAvatar.avatar)
+        })
 });
 
-api.getUserData(profileDataForm);//загрузим данные при загрузке страницы
-api.getStarterCards(cardList, cardClass, "42cd123a5b2a7d443e2e2c37");//создадим карточки при загрузке
+//удаление карточки
+cardsBlock.addEventListener('click', () => {
+    let cardId = cardClass.remove(myId);
+    if (cardId) {
+        api.deleteCard(cardId);
+    }
+})
+
+//грузим картинки с сервера, информацию о пользователе, аватар
+window.addEventListener('load', () => {
+    Promise.all([api.getStarterCards(), api.getUserData()])
+        .then(([cards, user]) => {
+            cardList.render(cards, cardClass, myId);
+            profileDataForm.setUserInfo(user.name, user.about, user.avatar);
+        })
+});
 
 export { wordsError };
 
-// api.deleteCard('5e8b359c69fae7001f72ad8c')
+//let cardForDelete = []
+// for (let qwe of cardForDelete) {
+//     api.deleteCard(qwe)
+// }
+
+
 
 //42cd123a5b2a7d443e2e2c37 мой id

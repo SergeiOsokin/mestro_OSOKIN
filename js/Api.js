@@ -41,8 +41,8 @@ export default class Api {
             .catch((err) => alert(err))
         )
     }
-    sendCard(nameCard, linkCard, cardList, cardClass) {//отправка карточки
-        fetch(`${this.option.baseUrl}/cards`, {
+    sendCard(nameCard, linkCard) {//отправка карточки
+        return (fetch(`${this.option.baseUrl}/cards`, {
             method: 'POST',
             headers: this.option.headers,
             body: JSON.stringify({
@@ -50,18 +50,9 @@ export default class Api {
                 link: linkCard,
             })
         })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Ошибка отправки данных на сервер: ` + res.status);
-            })
-            .then((data) => {
-                cardList.addCard(nameCard, linkCard, cardClass);
-            })
-            .catch((err) => {
-                alert(err);
-            })
+            .then((res) => this._getResponseData(res))
+            .catch((err) => alert(err))
+        )
     }
     sendAvatar(URL) {//отправка avatar
         return (fetch(`${this.option.baseUrl}/users/me/avatar`, {
@@ -89,35 +80,15 @@ export default class Api {
             method: 'PUT',
             headers: this.option.headers,
         })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Ошибка отправки данных на сервер: ` + res.status);
-            })
-            .then((data) => {
-                // console.log(data);
-            })
-            .catch((err) => {
-                alert(err);
-            })
+            .then((res) => this._getResponseData(res))
+            .catch((err) => alert(err))
     }
     deleteLike(cardId) {//снимаем лайк с карточки
         fetch(`${this.option.baseUrl}/cards/like/${cardId}`, {
             method: 'DELETE',
             headers: this.option.headers,
         })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Ошибка отправки данных на сервер: ` + res.status);
-            })
-            .then((data) => {
-                // console.log(data);
-            })
-            .catch((err) => {
-                alert(err);
-            })
+            .then((res) => this._getResponseData(res))
+            .catch((err) => alert(err))
     }
 }

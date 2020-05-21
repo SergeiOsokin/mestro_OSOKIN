@@ -1,8 +1,8 @@
 export default class Card {
     constructor(container) {
         this.containerCards = container;//поймаем контейнер с карточками и используя делегирование повесим обпаботчики лайка/удаления
-		this.containerCards.addEventListener('click', this.like);//слушатель для лайка
-        this.containerCards.addEventListener('click', this.remove);;//слушатель для удаления
+        // this.containerCards.addEventListener('click', this.like);//слушатель для лайка
+        // this.containerCards.addEventListener('click', this.remove);;//слушатель для удаления
     }
     create(name, place, like, cardId, ownerCard) {//метод создания DOM-элемента карточки
         const cardBlock = document.createElement('div');
@@ -41,22 +41,25 @@ export default class Card {
         return cardBlock;
     }
     like() {
-		if (event.target.classList.contains('place-card__like-icon')){
-        	event.target.classList.toggle('place-card__like-icon_liked');//лайкаем или убираем лайк переключением класса			
-            return;
-        }
-        if (event.target.classList.contains('place-card__like-icon') && event.target.classList.contains('place-card__like-icon_liked')){
-        	event.target.classList.toggle('place-card__like-icon_liked');//лайкаем или убираем лайк переключением класса			
-            return;
-        }
-    }
-    remove(myId) {
-        const e = event.target.classList.contains('place-card__delete-icon');
-        // const attr = event.target.closest(".place-card").getAttribute("ownerCard");
-		if (e && (event.target.closest(".place-card").getAttribute("ownerCard") === myId)){
-        	document.querySelector('.places-list').removeChild(event.target.closest('.place-card'));//а тут поднимаемся до родителя элемента у которого класс .place-card, чтобы удалить именно эту карточку
+        if (event.target.classList.contains('place-card__like-icon')) {
+            event.target.classList.toggle('place-card__like-icon_liked');
             return event.target.closest(".place-card").getAttribute("cardId");
         }
         return false;
-	}
+    }
+    dislike() {
+        if (event.target.classList.contains('place-card__like-icon') && event.target.classList.contains('place-card__like-icon_liked')){
+        	event.target.classList.toggle('place-card__like-icon_liked');			
+            return event.target.closest(".place-card").getAttribute("cardId");
+        }
+        return false;
+    }
+    remove(myId) {
+        const e = event.target.classList.contains('place-card__delete-icon');
+        if (e && (event.target.closest(".place-card").getAttribute("ownerCard") === myId)) {
+            document.querySelector('.places-list').removeChild(event.target.closest('.place-card'));//а тут поднимаемся до родителя элемента у которого класс .place-card, чтобы удалить именно эту карточку
+            return event.target.closest(".place-card").getAttribute("cardId");
+        }
+        return false;
+    }
 }

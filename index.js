@@ -10,6 +10,7 @@ import UserInfo from './js/UserInfo.js';
 import FormValidator from './js/FormValidator.js';
 import Api from './js/Api.js';
 import Avatar from './js/Avatar.js';
+// константы
 const serverUrl = NODE_ENV === 'development' ? 'http://praktikum.tk/cohort8' : 'https://praktikum.tk/cohort8';
 const api = new Api({
     baseUrl: serverUrl,
@@ -18,25 +19,25 @@ const api = new Api({
         'Content-Type': 'application/json'
     }
 });
-const mainContainer = document.querySelector('.root');//ловим общий блок для всего и из него будем вытаскивать полченные элементы\поля
-const cardsBlock = mainContainer.querySelector('.places-list');//ловим общий блок с карточками
-const buttonNewCard = mainContainer.querySelector('.user-info__button');//кнопка для вызова общего блока для добавления карточки
-const newCardBlockPopup = mainContainer.querySelector('.popup');//общий блок для добавления карточки
-const newCardForm = document.forms.new;//определение формы для добавления карточки
-const buttonEditProfile = mainContainer.querySelector('.user-info__button-edit');//кнопка для редактирования профиля
-const editProfilePopup = mainContainer.querySelector('.popup-edit');//общий блок для редактирования профиля
-const profileForm = document.forms.newEdit;//форма редактирования профиля
+const mainContainer = document.querySelector('.root');
+const cardsBlock = mainContainer.querySelector('.places-list');
+const buttonNewCard = mainContainer.querySelector('.user-info__button');
+const newCardBlockPopup = mainContainer.querySelector('.popup');
+const newCardForm = document.forms.new;
+const buttonEditProfile = mainContainer.querySelector('.user-info__button-edit');
+const editProfilePopup = mainContainer.querySelector('.popup-edit');
+const profileForm = document.forms.newEdit;
 const imageBlock = mainContainer.querySelector('.popup-image');
-
-const avatarPopup = mainContainer.querySelector('.popup-avatar');//общий блок для chenges avatar
-const avatarButton = mainContainer.querySelector('.user-info__photo');// блок foto профиля
-const newProfileAvatar = document.forms.newavatar;//форма редактирования avatar
-
+const avatarPopup = mainContainer.querySelector('.popup-avatar');
+const avatarButton = mainContainer.querySelector('.user-info__photo');
+const newProfileAvatar = document.forms.newavatar;
+const myId = "42cd123a5b2a7d443e2e2c37";
 const wordsError = {
     tooShort: 'Должно быть от 2 до 30 символов',
     valueMissing: 'Это обязательное поле',
     patternMismatch: 'Тут должна быть ссылка на картинку',
 }
+// экземпляры классов
 const cardClass = new Card(cardsBlock);
 const cardList = new CardList(cardsBlock);
 const popupContainers = new Popup(mainContainer);
@@ -48,51 +49,48 @@ const formValidationEdit = new FormValidator(profileForm);
 const formValidationCard = new FormValidator(newCardForm);
 const formValidationAvatar = new FormValidator(newProfileAvatar);
 const formAvatar = new Avatar(mainContainer);
-
-const myId = "42cd123a5b2a7d443e2e2c37";
-
-function addCard() {//функция для добавления карточек руками
-    api.sendCard(newCardForm.elements.name.value, newCardForm.elements.link.value, cardList, cardClass);
-    popupContainers.close(event);//закроем форму добавления обратившись к экземпляру класса Popup
+// функции
+function addCard() {
+    api.sendCard(newCardForm.elements.name.value, newCardForm.elements.link.value)
+        .then((result) => {
+            cardList.addCard(result, cardClass);
+        })
+    popupContainers.close(event);
 }
-function openEdit() {//функция для открытия редактирования профиля
-    profileDataForm.setUserInfo();//установим имя и профессию "по умолчанию" на открывшейся форме
-    popupEdit.open(event);//открытие блока с формой для профиля
-    formValidationEdit.setValidate(wordsError);//повесим слушатели для валидации
+function openEdit() {
+    profileDataForm.setUserInfo();
+    popupEdit.open(event);
+    formValidationEdit.setValidate(wordsError);
 }
-
-function openNewCard() {//функция для открытия блока новой карточки
-    popupContainers.open(event);//открытие блока с формой для карточки
-    formValidationCard.setValidate(wordsError);//повесим слушатели для валидации
+function openNewCard() {
+    popupContainers.open(event);
+    formValidationCard.setValidate(wordsError);
 }
-
 function openAvatarEdit() {
-    popupAvatar.open(event);//открытие блока с формой для аватара
-    formValidationAvatar.setValidate();//повесим слушатели для валидации
+    popupAvatar.open(event);
+    formValidationAvatar.setValidate();
 }
-
-buttonNewCard.addEventListener('click', openNewCard)// блока добаления карточки
-buttonEditProfile.addEventListener('click', openEdit);// блока редактирования профиля
-cardsBlock.addEventListener('click', popupImage.open.bind(popupImage));// блока c картинкой
-avatarButton.addEventListener('click', openAvatarEdit);
-
+// слушатели
+buttonNewCard.addEventListener('click', openNewCard)// открытие блока для добавления карточки
+buttonEditProfile.addEventListener('click', openEdit);// открытие блока для редактирования профиля
+cardsBlock.addEventListener('click', popupImage.open.bind(popupImage));// открытие картинки
+avatarButton.addEventListener('click', openAvatarEdit);// открытие блока для редактирования аватара
 newCardBlockPopup.addEventListener('click', popupContainers.close.bind(popupContainers))// для закрытия блока добавления карточки
 editProfilePopup.addEventListener('click', popupEdit.close.bind(popupEdit))// для закрытия блока редактирования профиля
 imageBlock.addEventListener('click', popupImage.close.bind(popupImage));// для закрытия блока c картинкой
 avatarPopup.addEventListener('click', popupAvatar.close.bind(popupAvatar));// для закрытия блока с аватаром
-
-// отправим новые данные о пользователе и установим новые значения
+//слушатель на кнопку создания карточки
+newCardForm.addEventListener('submit', () => {
+    event.preventDefault();
+    addCard()
+});
+// отправим новые данные о пользователе и установим новые значения, которые вернулись с сервера
 profileForm.addEventListener('submit', () => {
     event.preventDefault();
     api.sendUserData(profileForm.nameEdit.value, profileForm.aboutSelfEdit.value)
         .then((newProfile) => {
             profileDataForm.updateUserInfo(newProfile.name, newProfile.about, newProfile.avatar)
         });
-});
-//слушатель на кнопку создания карточки
-newCardForm.addEventListener('submit', () => {
-    event.preventDefault();
-    addCard()
 });
 //изменение аватара
 newProfileAvatar.addEventListener('submit', () => {
@@ -102,7 +100,6 @@ newProfileAvatar.addEventListener('submit', () => {
             formAvatar.updateAvatar(newAvatar.avatar)
         })
 });
-
 //удаление карточки
 cardsBlock.addEventListener('click', () => {
     let cardId = cardClass.remove(myId);
@@ -110,7 +107,22 @@ cardsBlock.addEventListener('click', () => {
         api.deleteCard(cardId);
     }
 })
-
+// постановка лайка
+cardsBlock.addEventListener('click', () => {
+    let cardId = cardClass.like();
+    console.log({"like": cardId})
+    if (cardId) {
+        api.putLike(cardId);
+    }
+})
+// удаление лайка
+cardsBlock.addEventListener('click', () => {
+    let cardId = cardClass.dislike();
+    console.log({"dislike": cardId})
+    if (cardId) {
+        api.deleteLike(cardId);
+    }
+})
 //грузим картинки с сервера, информацию о пользователе, аватар
 window.addEventListener('load', () => {
     Promise.all([api.getStarterCards(), api.getUserData()])
@@ -121,12 +133,3 @@ window.addEventListener('load', () => {
 });
 
 export { wordsError };
-
-//let cardForDelete = []
-// for (let qwe of cardForDelete) {
-//     api.deleteCard(qwe)
-// }
-
-
-
-//42cd123a5b2a7d443e2e2c37 мой id

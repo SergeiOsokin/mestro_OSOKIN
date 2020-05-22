@@ -76,19 +76,21 @@ export default class Api {
         )
     }
     putLike(cardId) {//ставим лайк карточке
-        fetch(`${this.option.baseUrl}/cards/like/${cardId}`, {
+        return (fetch(`${this.option.baseUrl}/cards/like/${cardId}`, {
             method: 'PUT',
             headers: this.option.headers,
         })
             .then((res) => this._getResponseData(res))
             .catch((err) => alert(err))
+        )
     }
     deleteLike(cardId) {//снимаем лайк с карточки
-        fetch(`${this.option.baseUrl}/cards/like/${cardId}`, {
+        return (fetch(`${this.option.baseUrl}/cards/like/${cardId}`, {
             method: 'DELETE',
             headers: this.option.headers,
         })
             .then((res) => this._getResponseData(res))
             .catch((err) => alert(err))
+        )
     }
 }

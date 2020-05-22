@@ -3,7 +3,7 @@ export default class CardList {
         this.container = container;//контейнер, где храним все добавленные карточки
     }
 
-    addCard({name, link, likes, _id, owner }, cardClass) {//добавляем карточки на страницу "руками".
+    addCard({ name, link, likes, _id, owner }, cardClass) {//добавляем карточки на страницу "руками".
         const card = cardClass.create(name, link, likes.length, _id, owner);//создадим разметку карточки
         this.container.appendChild(card);//добавляем созданную карточку в общий DOM
     }
@@ -12,7 +12,10 @@ export default class CardList {
         for (const element of cardArr) {
             if (element.owner._id === tmp) {
                 let cardArr = cardClass
-                .create(element.name, element.link, element.likes.length, element._id, element.owner._id);
+                    .create(element.name, element.link, element.likes.length, element._id, element.owner._id);
+                if (element.likes.some((item) => item._id === tmp)) {
+                   cardArr.querySelector('.place-card__like-icon').classList.add('place-card__like-icon_liked');
+                }
                 this.container.appendChild(cardArr);//добавляем созданную карточку в общий DOM
             }
         }

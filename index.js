@@ -19,24 +19,29 @@ const api = new Api({
         'Content-Type': 'application/json'
     }
 });
-const mainContainer = document.querySelector('.root');
-const cardsBlock = mainContainer.querySelector('.places-list');
-const buttonNewCard = mainContainer.querySelector('.user-info__button');
-const newCardBlockPopup = mainContainer.querySelector('.popup');
-const newCardForm = document.forms.new;
-const buttonEditProfile = mainContainer.querySelector('.user-info__button-edit');
-const editProfilePopup = mainContainer.querySelector('.popup-edit');
-const profileForm = document.forms.newEdit;
-const imageBlock = mainContainer.querySelector('.popup-image');
-const avatarPopup = mainContainer.querySelector('.popup-avatar');
-const avatarButton = mainContainer.querySelector('.user-info__photo');
-const newProfileAvatar = document.forms.newavatar;
 const myId = "42cd123a5b2a7d443e2e2c37";
 const wordsError = {
     tooShort: 'Должно быть от 2 до 30 символов',
     valueMissing: 'Это обязательное поле',
     patternMismatch: 'Тут должна быть ссылка на картинку',
 }
+
+const mainContainer = document.querySelector('.root');
+const cardsBlock = mainContainer.querySelector('.places-list');
+// 
+const buttonNewCard = mainContainer.querySelector('.user-info__button');
+const buttonEditProfile = mainContainer.querySelector('.user-info__button-edit');
+const editProfilePopup = mainContainer.querySelector('.popup-edit');
+const avatarButton = mainContainer.querySelector('.user-info__photo');
+// блоки 
+const newCardBlockPopup = mainContainer.querySelector('.popup');
+const imageBlock = mainContainer.querySelector('.popup-image');
+const avatarPopup = mainContainer.querySelector('.popup-avatar');
+// формы добавления
+const profileForm = document.forms.newEdit;
+const newCardForm = document.forms.new;
+const newProfileAvatar = document.forms.newavatar;
+
 // экземпляры классов
 const cardClass = new Card(cardsBlock);
 const cardList = new CardList(cardsBlock);
@@ -51,9 +56,11 @@ const formValidationAvatar = new FormValidator(newProfileAvatar);
 const formAvatar = new Avatar(mainContainer);
 // функции
 function addCard() {
+    newCardForm.elements[2].textContent = 'Загрузка...';
     api.sendCard(newCardForm.elements.name.value, newCardForm.elements.link.value)
         .then((result) => {
             cardList.addCard(result, cardClass);
+            newCardForm.elements[2].textContent = '+';
         })
     popupContainers.close(event);
 }
@@ -75,6 +82,7 @@ buttonNewCard.addEventListener('click', openNewCard)// открытие блок
 buttonEditProfile.addEventListener('click', openEdit);// открытие блока для редактирования профиля
 cardsBlock.addEventListener('click', popupImage.open.bind(popupImage));// открытие картинки
 avatarButton.addEventListener('click', openAvatarEdit);// открытие блока для редактирования аватара
+
 newCardBlockPopup.addEventListener('click', popupContainers.close.bind(popupContainers))// для закрытия блока добавления карточки
 editProfilePopup.addEventListener('click', popupEdit.close.bind(popupEdit))// для закрытия блока редактирования профиля
 imageBlock.addEventListener('click', popupImage.close.bind(popupImage));// для закрытия блока c картинкой
@@ -82,22 +90,26 @@ avatarPopup.addEventListener('click', popupAvatar.close.bind(popupAvatar));// д
 //слушатель на кнопку создания карточки
 newCardForm.addEventListener('submit', () => {
     event.preventDefault();
-    addCard()
+    addCard();
 });
 // отправим новые данные о пользователе и установим новые значения, которые вернулись с сервера
 profileForm.addEventListener('submit', () => {
+    profileForm.elements[2].textContent = 'Загрузка...';
     event.preventDefault();
     api.sendUserData(profileForm.nameEdit.value, profileForm.aboutSelfEdit.value)
         .then((newProfile) => {
-            profileDataForm.updateUserInfo(newProfile.name, newProfile.about, newProfile.avatar)
+            profileDataForm.updateUserInfo(newProfile.name, newProfile.about, newProfile.avatar);
+            profileForm.elements[2].textContent = 'Сохранить';
         });
 });
 //изменение аватара
 newProfileAvatar.addEventListener('submit', () => {
+    newProfileAvatar.elements[1].textContent = 'Загрузка...';
     event.preventDefault();
     api.sendAvatar(newProfileAvatar.nameavatar.value)
         .then(newAvatar => {
-            formAvatar.updateAvatar(newAvatar.avatar)
+            formAvatar.updateAvatar(newAvatar.avatar);
+            newProfileAvatar.elements[1].textContent = 'Сохранить';
         })
 });
 //удаление карточки
@@ -107,20 +119,18 @@ cardsBlock.addEventListener('click', () => {
         api.deleteCard(cardId);
     }
 })
-// постановка лайка
-cardsBlock.addEventListener('click', () => {
-    let cardId = cardClass.like();
-    console.log({"like": cardId})
-    if (cardId) {
-        api.putLike(cardId);
-    }
-})
-// удаление лайка
-cardsBlock.addEventListener('click', () => {
-    let cardId = cardClass.dislike();
-    console.log({"dislike": cardId})
-    if (cardId) {
-        api.deleteLike(cardId);
+// постановка лайка и удаление лайка 
+cardsBlock.addEventListener('click', (event) => {
+    let cardId;
+    if (event.target.classList.contains('place-card__like-icon_liked')) {
+        cardId = cardClass.like();
+        return api.deleteLike(cardId)
+            .then((newJSON) => event.target.nextElementSibling.textContent = newJSON.likes.length);
+    } 
+    if (event.target.classList.contains('place-card__like-icon')) {
+        cardId = cardClass.like();
+        return api.putLike(cardId)
+            .then((newJSON) => event.target.nextElementSibling.textContent = newJSON.likes.length);
     }
 })
 //грузим картинки с сервера, информацию о пользователе, аватар

@@ -1,11 +1,10 @@
 import { wordsError } from '../index.js';
 export default class FormValidator {
-    constructor(popup) {//функция для установки обработчиков на форму.принимаем открывшийся элемент
-        this.form = popup;//ловим форму, которая есть в открышейся форме
-        this.button = this.form.querySelector('.button');//ловим кнопку, которая есть в открышейся форме
+    constructor(popup) {
+        this.form = popup;
+        this.button = this.form.querySelector('.button');
     }
     setValidate() {
-
         this.form.addEventListener('input', this.setSubmitButtonState.bind(this, this.form, this.button));
         this.form.addEventListener('input', this.checkInputValidity.bind(event));
     }

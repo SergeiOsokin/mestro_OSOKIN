@@ -41,18 +41,8 @@ export default class Card {
         return cardBlock;
     }
     like() {
-        if (event.target.classList.contains('place-card__like-icon')) {
-            event.target.classList.toggle('place-card__like-icon_liked');
-            return event.target.closest(".place-card").getAttribute("cardId");
-        }
-        return false;
-    }
-    dislike() {
-        if (event.target.classList.contains('place-card__like-icon') && event.target.classList.contains('place-card__like-icon_liked')){
-        	event.target.classList.toggle('place-card__like-icon_liked');			
-            return event.target.closest(".place-card").getAttribute("cardId");
-        }
-        return false;
+        event.target.classList.toggle('place-card__like-icon_liked');
+        return event.target.closest(".place-card").getAttribute("cardId");
     }
     remove(myId) {
         const e = event.target.classList.contains('place-card__delete-icon');

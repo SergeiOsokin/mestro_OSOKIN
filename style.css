@@ -13,6 +13,8 @@
 @import url(./blocks/popup-image/popup-image.css);
 @import url(./blocks/popup-avatar/popup-avatar.css);
 
+@import url(./blocks/message-load/message-load.css);
+
 body {
   background-color: #000;
 }

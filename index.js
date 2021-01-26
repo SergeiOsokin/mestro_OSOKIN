@@ -11,7 +11,8 @@ import FormValidator from './js/FormValidator.js';
 import Api from './js/Api.js';
 import Avatar from './js/Avatar.js';
 // константы
-const serverUrl = NODE_ENV === 'development' ? 'http://praktikum.tk/cohort8' : 'https://praktikum.tk/cohort8';
+const serverUrl = NODE_ENV === 'development' ? 'http://nomoreparties.co/cohort8' : 'https://nomoreparties.co/cohort8';
+
 const api = new Api({
     baseUrl: serverUrl,
     headers: {
@@ -126,7 +127,7 @@ cardsBlock.addEventListener('click', (event) => {
         cardId = cardClass.like();
         return api.deleteLike(cardId)
             .then((newJSON) => event.target.nextElementSibling.textContent = newJSON.likes.length);
-    } 
+    }
     if (event.target.classList.contains('place-card__like-icon')) {
         cardId = cardClass.like();
         return api.putLike(cardId)
@@ -135,11 +136,24 @@ cardsBlock.addEventListener('click', (event) => {
 })
 //грузим картинки с сервера, информацию о пользователе, аватар
 window.addEventListener('load', () => {
-    Promise.all([api.getStarterCards(), api.getUserData()])
-        .then(([cards, user]) => {
-            cardList.render(cards, cardClass, myId);
-            profileDataForm.setUserInfo(user.name, user.about, user.avatar);
-        })
+
+    api.getUserData()
+    .then(user => {
+        mainContainer.querySelector('.message-load__text').textContent = 'Уже почти загрузили...'
+        profileDataForm.setUserInfo(user.name, user.about, user.avatar)
+    });
+    
+    api.getStarterCards()
+        .then(cards => {
+            mainContainer.querySelector('.message-load').style.display = 'none';
+            cardList.render(cards, cardClass, myId)
+        });
+
+    // Promise.all([api.getStarterCards(), api.getUserData()])
+    //     .then(([cards, user]) => {
+    //         cardList.render(cards, cardClass, myId);
+    //         profileDataForm.setUserInfo(user.name, user.about, user.avatar);
+    //     })
 });
 
 export { wordsError };
